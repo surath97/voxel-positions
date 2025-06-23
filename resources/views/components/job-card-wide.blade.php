@@ -1,3 +1,5 @@
+@props(['job'])
+
 <x-panel class="flex gap-x-6">
 
     <div>
@@ -13,9 +15,11 @@
     
 
     <div>
-        <x-tag>Tag 1</x-tag>
-        <x-tag>Tag 2</x-tag>
-        <x-tag>Tag 3</x-tag>
+        @foreach ($job->tags as $tag)
+
+            <x-tag :tag="$tag" />
+
+        @endforeach
     </div>
     
 </x-panel>
