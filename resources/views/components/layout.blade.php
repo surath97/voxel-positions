@@ -15,7 +15,7 @@
     <div class="px-10">
         <nav class="flex justify-between items-center py-4">
             <div>
-                <a href="">
+                <a href="/">
                     <img width="100px" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
                 </a>
             </div>
@@ -29,7 +29,10 @@
 
             @auth
                 <div>
-                    <a href="/jobs/create">Post a job</a>
+                    <a href="/jobs/create" class="inline-flex items-center gap-x-2">
+                        <span class="w-2 h-2 bg-blue-600 inline-block"></span>
+                        Post a job
+                    </a>
                 </div>
             @endauth
 
