@@ -30,8 +30,8 @@ class SessionController extends Controller
 
         // validate
         $attributes = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email'     => ['required', 'email'],
+            'password'  => ['required'],
         ]);
 
         // Login attempt
