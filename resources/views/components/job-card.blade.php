@@ -22,7 +22,7 @@
             @endforeach
         </div>
 
-        <x-employer-logo :width="42" />
+        <x-employer-logo :width="42" :employer="$job->employer" />
 
     </div>
     
