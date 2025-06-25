@@ -14,7 +14,10 @@ class SearchController extends Controller
     {
         // dd($request->q);
 
-        $jobs = Job::where('title', 'LIKE', '%'. request('q') .'%')->get();
+        $jobs = Job::query()
+                ->with(['employer', 'tags'])
+                ->where('title', 'LIKE', '%'. request('q') .'%')
+                ->get();
 
         // return $jobs;
 

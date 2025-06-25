@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class JobController extends Controller
@@ -19,7 +20,7 @@ class JobController extends Controller
     public function index()
     {
 
-        $jobs = Job::latest()->get()->groupBy('featured');
+        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
         // return $jobs;
 
         return view('jobs.index', [
@@ -42,32 +43,35 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = $request->validate([
+        DB::transaction(function () use ($request) {
 
-            'title'     => ['required'],
-            'salary'    => ['required'],
-            'location'  => ['required'],
-            'schedule'  => ['required', Rule::in(['Part Time', 'Full Time'])],
-            'url'       => ['required', 'url'],
-            'tags'      => ['nullable'],
+            $attributes = $request->validate([
 
-        ]);
+                'title'     => ['required'],
+                'salary'    => ['required'],
+                'location'  => ['required'],
+                'schedule'  => ['required', Rule::in(['Part Time', 'Full Time'])],
+                'url'       => ['required', 'url'],
+                'tags'      => ['nullable'],
 
-        $attributes['featured'] = $request->has('featured');
+            ]);
 
-        $job = Auth::user()->employer->jobs()->create(Arr::except($attributes, 'tags'));
+            $attributes['featured'] = $request->has('featured');
 
-        // Insert tags
-        if ($attributes['tags']) {
-            
-            $arr = explode(',', trim($attributes['tags']));
+            $job = Auth::user()->employer->jobs()->create(Arr::except($attributes, 'tags'));
 
-            foreach ($arr as $tag) {
+            // Insert tags
+            if ($attributes['tags']) {
+                
+                $arr = explode(',', trim($attributes['tags']));
 
-                $job->tag($tag);
+                foreach ($arr as $tag) {
+
+                    $job->tag($tag);
+                }
             }
-        }
 
+        });
 
         return redirect('/')->with('success', 'Job Created Successfully..!');
 
