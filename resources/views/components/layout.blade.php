@@ -46,6 +46,18 @@
         </nav>
 
         <main class="mt-10 max-w-[986px] mx-auto">
+
+            @if (session('success'))
+                <x-flash-message status="success" />
+
+            @elseif (session('error'))
+                <x-flash-message status="error" />
+
+            @elseif (session('info'))
+                <x-flash-message status="info" />
+
+            @endif
+
             {{ $slot }}
         </main>
     </div>
