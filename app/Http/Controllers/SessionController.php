@@ -49,7 +49,8 @@ class SessionController extends Controller
         request()->session()->regenerate();
 
         // redirect
-        return redirect()->intended('/');
+
+        return redirect()->intended('/')->with('success', 'Logged in Successfully..!');
 
     }
 
@@ -61,6 +62,6 @@ class SessionController extends Controller
     {
         Auth::logout();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Logged out Successfully..!');
     }
 }

@@ -28,12 +28,20 @@
             </div>
 
             @auth
-                <div>
+                <div class="flex space-x-5">
                     <a href="/jobs/create" class="inline-flex items-center gap-x-2">
                         <span class="w-2 h-2 bg-blue-600 inline-block"></span>
                         Post a job
                     </a>
+                    <form action="logout" method="post">
+                        @csrf
+                        @method('DELETE')
+                        
+                        <x-forms.button type="submit">Log Out</x-forms.button>
+    
+                    </form>
                 </div>
+
             @endauth
 
             @guest
@@ -48,14 +56,15 @@
         <main class="mt-10 max-w-[986px] mx-auto">
 
             @if (session('success'))
-                <x-flash-message status="success" />
+                <x-flash-message status="success" :msg="session('success')" />
+            @endif
+            
+            @if (session('error'))
+                <x-flash-message status="error" :msg="session('error')" />
+            @endif
 
-            @elseif (session('error'))
-                <x-flash-message status="error" />
-
-            @elseif (session('info'))
-                <x-flash-message status="info" />
-
+            @if (session('info'))
+                <x-flash-message status="info" :msg="session('info')" />
             @endif
 
             {{ $slot }}

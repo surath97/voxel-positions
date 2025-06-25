@@ -69,7 +69,7 @@ class JobController extends Controller
         }
 
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Job Created Successfully..!');
 
     }
 

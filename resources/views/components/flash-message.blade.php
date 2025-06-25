@@ -1,4 +1,4 @@
-@props(['status'])
+@props(['status', 'msg'])
 
 @php
     if ($status == "success") {
@@ -43,17 +43,17 @@
         @if ($status == "success")
 
             <x-tni-tick-circle class="w-8 h-8 text-emerald-500" />
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus?</span>
+            <span>{{ $msg }}</span>
 
         @elseif ($status == "error")
 
             <x-tni-x-circle class="w-8 h-8 text-red-500" />
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus?</span>
+            <span>{{ $msg }}</span>
         
         @elseif ($status == "info")
 
             <x-tni-info-circle class="w-8 h-8 text-amber-500" />
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus?</span>
+            <span>{{ $msg }}</span>
         
         @endif
 
