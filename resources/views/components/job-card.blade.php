@@ -4,14 +4,14 @@
     
     <div class="self-start text-sm">{{ $job->employer->name }}</div>
 
-    <div class="py-8">
-        <h3 class="text-xl font-bold group-hover:text-blue-600 transition-colors duration-200">
-            <a href="{{ $job->url }}" target="_blank">
+    <a href="/jobs/{{ $job->id }}">
+        <div class="py-8">
+            <h3 class="text-xl font-bold group-hover:text-blue-600 transition-colors duration-200">
                 {{ $job->title }}
-            </a>
-        </h3>
-        <p class="text-sm mt-4">{{ $job->schedule }} - {{ $job->salary }}</p>
-    </div>
+            </h3>
+            <p class="text-sm mt-4">{{ $job->schedule }} - {{ $job->salary }}</p>
+        </div>
+    </a>
 
     <div class="flex justify-between items-center mt-auto">
         <div>

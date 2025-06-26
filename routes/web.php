@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [JobController::class, 'index']);
 Route::get('/jobs/create', [JobController::class, 'create'])->middleware('auth');
+Route::get('/jobs/{job}', [JobController::class, 'show']);
 Route::post('/jobs', [JobController::class, 'store'])->middleware('auth');
 
 Route::get('/search', SearchController::class);
