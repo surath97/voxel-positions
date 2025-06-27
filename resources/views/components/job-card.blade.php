@@ -1,6 +1,6 @@
 @props(['job'])
 
-<x-panel class="flex flex-col text-center hover:scale-110 transition-transform">
+<x-panel class="flex flex-col text-center hover:scale-110 transition-transform hover:bg-gradient-to-br hover:to-blue-600/10">
     
     <div class="self-start text-sm">{{ $job->employer->name }}</div>
 

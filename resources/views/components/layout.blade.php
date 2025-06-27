@@ -71,12 +71,6 @@
         </main>
     </div>
 
-    {{-- <div class="mt-20">
-        <div class="flex gap-2 px-2 py-3 bg-gradient-to-r from-white/10 to-indigo-500/50">
-            Made with <x-tni-heart-circle class="text-red-600 size-5" /> by Surath
-        </div>
-    </div> --}}
-
     <x-footer-main />
 
 </body>
