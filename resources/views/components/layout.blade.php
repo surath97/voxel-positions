@@ -12,7 +12,7 @@
 </head>
 <body class="bg-pixel_positions text-white font-hanken-grotesk">
     
-    <div class="px-10">
+    <div class="px-10 min-h-dvh">
         <nav class="flex justify-between items-center py-4">
             <div>
                 <a href="/">
@@ -71,11 +71,13 @@
         </main>
     </div>
 
-    <div class="mt-20">
+    {{-- <div class="mt-20">
         <div class="flex gap-2 px-2 py-3 bg-gradient-to-r from-white/10 to-indigo-500/50">
             Made with <x-tni-heart-circle class="text-red-600 size-5" /> by Surath
         </div>
-    </div>
+    </div> --}}
+
+    <x-footer-main />
 
 </body>
 </html>
