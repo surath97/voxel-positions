@@ -44,21 +44,25 @@
             <h3 class="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">{{ $job->employer->name }}</h3>
             <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm ">The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works in outer space.</p>
 
-            <div class="flex mt-5 justify-between">
-                <form action="/jobs/{{ $job->id }}/edit" method="get">
-                    <x-forms.button class="inline-flex items-center gap-x-2">
-                        <x-tni-edit-1 class="size-4" /> Edit Job
-                    </x-forms.button>
-                </form>
+            @can('edit', $job)
 
-                <form method="POST" action="/jobs/{{ $job->id }}">
-                    @csrf
-                    @method('DELETE')
-                    <x-forms.button class="inline-flex items-center gap-x-2 bg-red-800 hover:bg-red-900" type="submit">
-                        <x-tni-bin class="size-4" /> Delete Job
-                    </x-forms.button>
-                </form>
-            </div>
+                <div class="flex mt-5 justify-between">
+                    <form action="/jobs/{{ $job->id }}/edit" method="get">
+                        <x-forms.button class="inline-flex items-center gap-x-2">
+                            <x-tni-edit-1 class="size-4" /> Edit Job
+                        </x-forms.button>
+                    </form>
+
+                    <form method="POST" action="/jobs/{{ $job->id }}">
+                        @csrf
+                        @method('DELETE')
+                        <x-forms.button class="inline-flex items-center gap-x-2 bg-red-800 hover:bg-red-900" type="submit">
+                            <x-tni-bin class="size-4" /> Delete Job
+                        </x-forms.button>
+                    </form>
+                </div>
+
+            @endcan
 
         </div>
 

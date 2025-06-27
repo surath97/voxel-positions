@@ -9,6 +9,13 @@ use Illuminate\Auth\Access\Response;
 class JobPolicy
 {
     /**
+     * Determine whether the user can edit any models.
+     */
+    public function edit(User $user, Job $job): bool
+    {
+        return $job->employer->user->is($user);
+    }
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
