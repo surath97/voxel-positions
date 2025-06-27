@@ -28,4 +28,5 @@ class Job extends Model
 
         $this->tags()->attach($tag);
     }
+
 }

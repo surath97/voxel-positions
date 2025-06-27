@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Http\Requests\StoreJobRequest;
-use App\Http\Requests\UpdateJobRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -62,10 +60,12 @@ class JobController extends Controller
 
             // Insert tags
             if ($attributes['tags']) {
-                
-                $arr = explode(',', trim($attributes['tags']));
 
-                foreach ($arr as $tag) {
+                // Tag process
+                $tagNames = explode(',', $attributes['tags']);
+                $tagNames = array_unique(array_map("trim", $tagNames));
+
+                foreach ($tagNames as $tag) {
 
                     $job->tag($tag);
                 }
@@ -90,15 +90,55 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        //
+        return view('jobs.edit', ['job' => $job]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJobRequest $request, Job $job)
+    public function update(Request $request, Job $job)
     {
-        //
+        DB::transaction(function () use ($request, $job) {
+            
+            $attributes = $request->validate([
+
+                'title'     => ['required'],
+                'salary'    => ['required'],
+                'location'  => ['required'],
+                'schedule'  => ['required', Rule::in(['Part Time', 'Full Time'])],
+                'url'       => ['required', 'url'],
+                'tags'      => ['nullable'],
+
+            ]);
+
+            $attributes['featured'] = $request->has('featured');
+
+            $job->update(Arr::except($attributes, 'tags'));
+
+
+            // Tag process
+            $tagInput = $request->input('tags', '');
+            $tagNames = explode(',', $tagInput);
+            $tagNames = array_unique(array_map("trim", $tagNames));
+            $tagIDs = [];
+            
+            // Find or create each tag and collect its ID
+            foreach ($tagNames as $tagName) {
+                if (!empty($tagName)) {
+                    
+                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $tagIDs[] = $tag->id;
+                }
+            }
+
+            // Sync the tags with the job
+            $job->tags()->sync($tagIDs);
+
+            // dd($tagIDs);   
+            
+        });
+
+        return redirect('/jobs/' . $job->id)->with('success', 'Job Updated Successfully..!');
     }
 
     /**
@@ -106,6 +146,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        $job->delete();
+
+        return redirect('/')->with('success', 'Job Deleted Successfully..!');
     }
 }

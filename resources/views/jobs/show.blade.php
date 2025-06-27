@@ -44,11 +44,22 @@
             <h3 class="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight ">{{ $job->employer->name }}</h3>
             <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm ">The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works in outer space.</p>
 
-            <form action="" method="get" class="mt-5">
-                <x-forms.button class="inline-flex items-center gap-x-2">
-                    <x-tni-edit-1 class="size-4" /> Edit Job
-                </x-forms.button>
-            </form>
+            <div class="flex mt-5 justify-between">
+                <form action="/jobs/{{ $job->id }}/edit" method="get">
+                    <x-forms.button class="inline-flex items-center gap-x-2">
+                        <x-tni-edit-1 class="size-4" /> Edit Job
+                    </x-forms.button>
+                </form>
+
+                <form method="POST" action="/jobs/{{ $job->id }}">
+                    @csrf
+                    @method('DELETE')
+                    <x-forms.button class="inline-flex items-center gap-x-2 bg-red-800 hover:bg-red-900" type="submit">
+                        <x-tni-bin class="size-4" /> Delete Job
+                    </x-forms.button>
+                </form>
+            </div>
+
         </div>
 
     </div>
@@ -65,25 +76,6 @@
             @endforeach
         </div>
     </div>
-
-    {{-- <x-forms.input label="Job Title" name="title" placeholder="Manager" />
-    <x-forms.input label="Salary" name="salary" placeholder="$90,000" />
-    <x-forms.input label="Location" name="location" placeholder="Colombo, Sri Lanka" />
-
-    <x-forms.select label="Schedule" name="schedule">
-        <option class="text-black">Part Time</option>
-        <option class="text-black">Full Time</option>
-    </x-forms.select>
-
-    <x-forms.input label="URL" name="url" placeholder="https://acme.com/ceo-wanted/apply" />
-
-    <x-forms.checkbox label="Featured (cost extra)" name="featured" />
-
-    <x-forms.divider />
-
-    <x-forms.input label="Tags ( comma seperated )" name="tags" placeholder="manager, production, supply" />
-    
-    <x-forms.button type="submit">Publish</x-forms.button> --}}
 
 
 </x-layout>
